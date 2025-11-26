@@ -72,6 +72,9 @@ class ReverseGeocoder:
                 response = self.session.get(self.base_url, params=params, timeout=10)
                 response.raise_for_status()
 
+                # Ensure proper UTF-8 encoding for special characters
+                response.encoding = 'utf-8'
+
                 data = response.json()
 
                 # Extract address components
@@ -200,7 +203,7 @@ class ReverseGeocoder:
         # Merge with original dataframe
         output_df = pd.concat([df, results_df.drop(['latitude', 'longitude'], axis=1)], axis=1)
 
-        # Save to output file
-        output_df.to_csv(output_file, index=False)
+        # Save to output file with UTF-8 encoding
+        output_df.to_csv(output_file, index=False, encoding='utf-8-sig')
 
         return successful_count, total_count
