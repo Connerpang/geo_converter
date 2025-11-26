@@ -155,7 +155,7 @@ def process_geocoding(uploaded_file, df, lat_column, lon_column):
                 # Create intermediate results dataframe
                 temp_results_df = pd.DataFrame(results)
                 temp_output_df = pd.concat([df.iloc[:processed], temp_results_df.drop(['latitude', 'longitude'], axis=1)], axis=1)
-                temp_output_df.to_csv(output_path, index=False)
+                temp_output_df.to_csv(output_path, index=False, encoding='utf-8-sig')
                 stats_container.caption(f"💾 Progress auto-saved at row {processed}")
 
         # Create results dataframe
@@ -164,8 +164,8 @@ def process_geocoding(uploaded_file, df, lat_column, lon_column):
         # Merge with original dataframe
         output_df = pd.concat([df, results_df.drop(['latitude', 'longitude'], axis=1)], axis=1)
 
-        # Save results
-        output_df.to_csv(output_path, index=False)
+        # Save results with UTF-8 encoding
+        output_df.to_csv(output_path, index=False, encoding='utf-8-sig')
 
         # Clear progress indicators
         progress_bar.empty()
